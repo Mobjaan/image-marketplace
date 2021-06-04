@@ -1,0 +1,32 @@
+<%- contentFor('body') %>
+
+<div class="container my-5">
+    <h1>Login</h1>
+    <div class="lead">Welcome back!</div>
+</div>
+
+<div class="container my-5">
+    <form method="POST" action="/auth/login">
+        <% if(typeof(errors) !="undefined" && errors){ %>
+            <div class="form-group text-danger">
+                <b>The form has errors: </b>
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
