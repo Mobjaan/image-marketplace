@@ -33,4 +33,11 @@ module.exports = (app) => {
 
     app.use(express.static('statics'))
 
+    app.use((req, res, next) => {
+      res.locals = {
+        current_user: req.session.current_user // || null
+      }
+      next()
+    })
+
 }
