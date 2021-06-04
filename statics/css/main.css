@@ -1,0 +1,39 @@
+body {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+}
+
+.mobjaan {
+    font-family: 'Dancing Script', cursive;
+    margin: 0 auto;
+}
+
+.bg-image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.head-image {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: #ffffff;
+    background-image: url('/images/head.jpg');
+}
+
+.head-image::after {
+    content: ' ';
+    background-color:rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    /* overflow: hidden; */
+}
