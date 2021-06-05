@@ -1,0 +1,62 @@
+<%- contentFor('body') %>
+
+<div class="container my-5">
+    <h1>Category</h1>
+    <% if(typeof(category) !="undefined" && category){ %>
+        <div class="lead">Update the Category</div>
+    <% } else { %>
+        <div class="lead">Add new Category</div>
+    <% } %>
+</div>
+
+<div class="container my-5">
+    <form method="POST" action='
+        <% if(typeof(category) !="undefined" && category){ %>
+            /categories/update
+        <% } else { %>
+            /categories/add
+        <% } %>
+        '>
+        <% if(typeof(errors) !="undefined" && errors){ %>
+            <div class="form-group text-danger">
+                <b>The form has errors: </b>
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Title</label>
+            <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Category Name" required     <% if(typeof(category) !="undefined" && category){ %> value="<%=category.title%>" <% } %>
+                >
+        </div>
+        
+        <% if(typeof(categories) !="undefined" && !!categories && categories.length != 0){ %>
+            <div class="form-group">
+                <label for="parent">Parent Category</label>
+                <select id="parent" name="parent" class="custom-select">
+                    <option>None</option>
+                    <% categories.forEach(function(theCategory) { %>
+                        <% if(typeof(category) !="undefined" && category){ %>
+                            <% if (!category._id.equals(theCategory._id)) { %>
+                                <option value="<%=theCategory._id%>" <% if(category.parent.equals(theCategory._id)){ %> selected="true" <% } %>><%=theCategory.title%></option>
+                                
+                            <% }  %>
+                        <% } else { %>
+                            <option value="<%=theCategory._id%>"><%=theCategory.title%></option>
+                        <% } %>
+                    <% }) %>
+                </select>
+            </div>
+        <% } %>
+
+        <div class="form-group">
+            <% if(typeof(category) !="undefined" && category){ %>
+                <input type="hidden" name="category" value="<%=category._id%>">
+            <% } %>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
