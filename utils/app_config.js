@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const Category = require('../models/Category')
 const expressLayouts = require('express-ejs-layouts')
 
 module.exports = (app) => {
@@ -33,9 +34,10 @@ module.exports = (app) => {
 
     app.use(express.static('statics'))
 
-    app.use((req, res, next) => {
+    app.use(async (req, res, next) => {
       res.locals = {
-        current_user: req.session.current_user // || null
+        current_user: req.session.current_user,
+        categories: await Category.find()
       }
       next()
     })
