@@ -6,10 +6,12 @@ const imageSchema = new Schema({
     price: Number,
     description: String, 
     upload_path: String,
-    category: {
+    categories: [
+        {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
-    },
+        }
+    ],
     seller: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
