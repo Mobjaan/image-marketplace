@@ -1,0 +1,48 @@
+<%- contentFor('body') %>
+
+<div class="container my-5">
+    <h1>Images</h1>
+    <div class="lead">List of Images</div>
+</div>
+
+<div class="container my-5">
+    <% if(typeof(images) !="undefined" && !!images && images.length != 0){ %>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Description</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% let counter = 0 %>
+                <% images.forEach(function(image) { %>
+                    <tr>
+                        <td><%=++counter%></td>
+                        <td><%=image.title%></td>
+                        <td><%=image.price%></td>
+                        <td><%=image.description%></td>
+                        <td>
+                            <% image.categories.forEach(function(category){ %>
+                                <span class="badge badge-light d-inline-block mx-1">
+                                    <%=category.title%>
+                                </span>
+                            <% }); %>
+                        </td>
+                        <td>
+                            <a href="/images/delete/<%=image.id%>">Delete</a> &nbsp;
+                            <a href="/images/get/<%=image.id%>" target="_blank">View</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+    <% } %>
+
+</div>
