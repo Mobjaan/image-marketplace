@@ -1,0 +1,105 @@
+<%- contentFor('body') %>
+
+<div class="container my-5">
+    <h1>Image</h1>
+    <% if(typeof(image) !="undefined" && image){ %>
+        <div class="lead">Update the Image</div>
+    <% } else { %>
+        <div class="lead">Add new Image</div>
+    <% } %>
+</div>
+
+<div class="container my-5">
+    <form id="form" enctype="multipart/form-data" method="POST" action='
+        <% if(typeof(image) !="undefined" && image){ %>
+            /images/update
+        <% } else { %>
+            /images/add
+        <% } %>
+        '>
+        <% if(typeof(errors) !="undefined" && errors){ %>
+            <div class="form-group text-danger">
+                <b>The form has errors: </b>
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Title</label>
+            <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Title" required     <% if(typeof(image) !="undefined" && image){ %> value="<%=image.title%>" <% } %>
+                >
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" name="price" class="form-control" id="price" aria-describedby="emailHelp" placeholder="Price" required     <% if(typeof(image) !="undefined" && image){ %> value="<%=image.price%>" <% } %>
+                >
+        </div>
+
+        <% if(typeof(categories) !="undefined" && !!categories && categories.length != 0){ %>
+            <div class="form-group">
+                <label for="categories">Categories</label>
+                <select id="categories" class="categories-select" multiple data-placeholder="Choose categories" required>
+                    <% categories.forEach(function(theCategory) { %>
+                        <% if(typeof(image) !="undefined" && image.categories){ %>
+                            <% image.categories.foreach(function(category) {  %>
+                                <% if (category._id.equals(theCategory._id)) { %>
+                                    <option value="<%=theCategory._id%>" <% if(category.parent.equals(theCategory._id)){ %> selected="true" <% } %>><%=theCategory.title%></option>
+                                <% }  %>
+                            <% }) %>
+                        <% } else { %>
+                            <option value="<%=theCategory._id%>"><%=theCategory.title%></option>
+                        <% } %>
+                    <% }) %>
+                </select>
+            </div>
+        <% } %>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" id="description" class="form-control" placeholder="Description" required><% if(typeof(image) !="undefined" && image){ %> <%=image.description%> <% } %></textarea>
+        </div>
+        
+        
+        <div class="form-group">
+            <div class="my-4">
+                <label for="customFile" class="d-inline-block mx-2">Image</label>
+                <% if(typeof(image) !="undefined" && image){ %> 
+                    <a class="d-inline-block mx-2" href="<%=image.upload_path%>">View</a>
+                <% } %>
+            </label>
+            <div class="custom-file">
+                <input type="file" name="image" class="form-control custom-file-input" id="customFile" required accept="image/*">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="categories">
+            <button id="btn-submit" type="button" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+$(document).ready(() => {
+
+    $('#categories').select2({
+        multiple: true,
+        width: '100%'
+    })
+
+    $('#btn-submit').click(() => {
+        $('input[name="categories"]').val($('#categories').select2("val"))
+        $('form#form').submit()
+    })
+    
+})
+
+</script>
