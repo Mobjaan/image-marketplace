@@ -1,3 +1,4 @@
+const Image = require('../models/Image')
 const router = require('express').Router()
 const Category = require('../models/Category')
 const { body, validationResult } = require('express-validator') 
@@ -65,6 +66,7 @@ router.post('/update',
 router.get('/delete/:id', async (req, res) => {
     await Category.findByIdAndDelete(req.params.id)
     await Category.updateMany({ parent: req.params.id }, { $unset: { parent: "" } })
+    await Image.updateMany({ categories: req.params.id }, { $pullAll: { categories: [req.params.id] } })
     return res.redirect('/categories/view')
 })
 
