@@ -6,6 +6,8 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const Category = require('../models/Category')
 const expressLayouts = require('express-ejs-layouts')
+const fileupload = require('express-fileupload')
+
 
 module.exports = (app) => {
     app.set('trust proxy', 1)
@@ -22,14 +24,18 @@ module.exports = (app) => {
         cookie: { secure: false, maxAge: (24 * 1000 * 60 * 100) }
     }))
     
-    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use(fileupload({
+      useTempFiles: true
+    }))
+
+    app.use(bodyParser.urlencoded({ extended: true }))
     app.use(bodyParser.json()) 
     app.use(express.json())
 
     app.use(morgan('combined'))
 
-    app.set('view engine', 'ejs')
     app.use(expressLayouts)
+    app.set('view engine', 'ejs')
     app.set('views', './views')
 
     app.use(express.static('statics'))
