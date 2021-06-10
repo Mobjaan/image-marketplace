@@ -4,6 +4,7 @@ const router = require('express').Router()
 const Category = require('../models/Category')
 const imageUplaoder = require('../utils/upload')
 const { body, validationResult } = require('express-validator') 
+const { authenticatedMiddleware } = require('../utils/middlewares')
 
 
 router.get('/get/:id', async (req, res) => {
@@ -14,6 +15,9 @@ router.get('/get/:id', async (req, res) => {
         return  res.status(404)
     }
 })
+
+
+router.use(authenticatedMiddleware)
 
 router.get('/all', async (req, res) => {
     return res.render('image_showcase.ejs', { images: await Image.find() })
@@ -76,10 +80,10 @@ async (req, res) => {
         categories: req.body.categories.split(','),
         description: req.body.description,
         seller: req.session.current_user._id,
-        upload_path: upload_result.url
+        upload_path: upload_result.secure_url
     }).save()
 
-    return res.redirect('images/view')
+    return res.redirect('/images/view')
 })
 
 
