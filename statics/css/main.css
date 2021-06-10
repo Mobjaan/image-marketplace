@@ -37,3 +37,34 @@ body {
     z-index: 1;
     /* overflow: hidden; */
 }
+
+
+.gallery .image {
+    width: auto;
+    position: relative;
+}
+
+.gallery .image img {
+    width: 100%;
+}
+.gallery .image .data {
+	width: 100%;
+    height: 0px;
+	padding-top: 0px;
+    overflow:hidden;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+	position:absolute;
+	background-color:#000;
+	color: #FFF;
+    bottom: -100px;
+}
+
+
+.gallery .image:hover .data, .gallery .image:focus .data {
+    bottom: 1.5rem;
+    height: 100px;
+    padding: 20px;
+}
