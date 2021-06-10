@@ -9,7 +9,13 @@ paypal.configure({
     'client_secret': process.env.PAYPAL_CLIENT_SECRET
 });
 
+
 module.exports = {
-    paypal,
-    stripe
+    makeStripePayment: async (amount) => {
+        return await stripe.paymentIntents.create({
+            amount: amount * 100, 
+            currency: 'usd', 
+            metadata: {integration_check: 'accept_a_payment'}, 
+        })
+    }
 }
