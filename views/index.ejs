@@ -9,5 +9,56 @@
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
+</section>
+
+<section>
+    <div class="text-center my-5">
+        <h2>Images</h2>
+        <p class="lead">Explore the images</p>
+    </div>
+    <div class="container my-5 gallery">
+        <div class="row">
+            <% if (typeof(images) !="undefined" && !!images && images.length != 0) { %>
+              
+                <% while (images.length != 0) { %>
+                    <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+
+
+                        <% images.splice(0, 2).forEach(image => { %>
+                            <div class="image">
+                                <img
+                                    src="/images/get/<%=image._id%>"
+                                    class="w-100 shadow-1-strong rounded mb-4"
+                                    alt="<%=image.title%>"
+                                />
+                                <div class="data">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h4><%=image.title%></h4>
+                                        </div>
+                                        <div class="col-6 text-right">hi</div>
+                                    </div>
+                                    <p><%=image.description%></p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+
+
+        <% if(typeof(categories) !="undefined" && !!categories && categories.length != 0){ %>
+
+            <% categories.forEach(function(category) { %>
+                <a href="/images/category/<%=category._id%>">
+                    <span class="badge badge-light d-inline-block mx-1">
+                        <%=category.title%>
+                    </span>
+                </a>
+            <% }) %>
+        <% } %>
+
+    </div>
 
 </section>
